@@ -31,6 +31,7 @@ vmwgfx_drivers := vmwgfx
 
 valid_drivers := \
 	prebuilt \
+	dumb \
 	$(intel_drivers) \
 	$(radeon_drivers) \
 	$(rockchip_drivers) \
@@ -154,6 +155,11 @@ LOCAL_STATIC_LIBRARIES += \
 	libmesa_gallium
 LOCAL_SHARED_LIBRARIES += libdl
 endif # DRM_USES_PIPE
+
+ifneq ($(filter dumb, $(DRM_GPU_DRIVERS)),)
+LOCAL_SRC_FILES += gralloc_drm_dumb.c
+LOCAL_CFLAGS += -DENABLE_DUMB
+endif
 include $(BUILD_SHARED_LIBRARY)
 
 

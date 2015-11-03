@@ -87,6 +87,11 @@ init_drv_from_fd(int fd)
 		if (!drv && !strcmp(version->name, "nouveau"))
 			drv = gralloc_drm_drv_create_for_nouveau(fd);
 #endif
+
+#ifdef ENABLE_DUMB
+		if (!drv)
+			drv = gralloc_drm_drv_create_for_dumb(fd);
+#endif
 	}
 
 	if (!drv) {
