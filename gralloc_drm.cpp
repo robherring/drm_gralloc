@@ -87,12 +87,9 @@ init_drv_from_fd(int fd)
 		if (!drv && !strcmp(version->name, "nouveau"))
 			drv = gralloc_drm_drv_create_for_nouveau(fd);
 #endif
-
-#ifdef ENABLE_DUMB
-		if (!drv)
-			drv = gralloc_drm_drv_create_for_dumb(fd);
-#endif
 	}
+	if (!drv)
+		drv = gralloc_drm_drv_create_for_dumb(fd);
 
 	if (!drv) {
 		ALOGE("unsupported driver: %s", (version->name) ?
@@ -117,7 +114,7 @@ struct gralloc_drm_t *gralloc_drm_create(void)
 	if (!drm)
 		return NULL;
 
-	property_get("gralloc.drm.device", path, "/dev/dri/renderD128");
+	property_get("gralloc.drm.device", path, "/dev/dri/card0");
 	drm->fd = open(path, O_RDWR);
 	if (drm->fd < 0) {
 		ALOGE("failed to open %s", path);
@@ -323,6 +320,12 @@ buffer_handle_t gralloc_drm_bo_get_handle(struct gralloc_drm_bo_t *bo, int *stri
 	if (stride)
 		*stride = bo->handle->stride;
 	return &bo->handle->base;
+}
+
+int gralloc_drm_get_gem_handle(buffer_handle_t _handle)
+{
+	struct gralloc_drm_handle_t *handle = gralloc_drm_handle(_handle);
+	return (handle) ? handle->name : 0;
 }
 
 /*

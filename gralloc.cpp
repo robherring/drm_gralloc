@@ -39,6 +39,8 @@ static int drm_init(struct drm_module_t *dmod)
 {
 	int err = 0;
 
+	ALOGE("gralloc drm_init");
+
 	pthread_mutex_lock(&dmod->mutex);
 	if (!dmod->drm) {
 		dmod->drm = gralloc_drm_create();

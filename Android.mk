@@ -1,16 +1,16 @@
 # Copyright (C) 2010 Chia-I Wu <olvaffe@gmail.com>
 # Copyright (C) 2010-2011 LunarG Inc.
-# 
+#
 # Permission is hereby granted, free of charge, to any person obtaining a
 # copy of this software and associated documentation files (the "Software"),
 # to deal in the Software without restriction, including without limitation
 # the rights to use, copy, modify, merge, publish, distribute, sublicense,
 # and/or sell copies of the Software, and to permit persons to whom the
 # Software is furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included
 # in all copies or substantial portions of the Software.
-# 
+#
 # THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 # IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 # FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
@@ -21,7 +21,7 @@
 
 # Android.mk for drm_gralloc
 
-DRM_GPU_DRIVERS := $(strip $(filter-out swrast, $(BOARD_GPU_DRIVERS)))
+DRM_GPU_DRIVERS := dumb #$(strip $(filter-out swrast, $(BOARD_GPU_DRIVERS)))
 
 intel_drivers := i915 i965 i915g ilo
 radeon_drivers := r300g r600g
@@ -181,7 +181,7 @@ LOCAL_SHARED_LIBRARIES := \
 LOCAL_SHARED_LIBRARIES += \
 	libGLESv1_CM
 
-LOCAL_MODULE := gralloc.$(TARGET_PRODUCT)
+LOCAL_MODULE := gralloc.ranchu
 LOCAL_MODULE_TAGS := optional
 LOCAL_MODULE_RELATIVE_PATH := hw
 include $(BUILD_SHARED_LIBRARY)
