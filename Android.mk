@@ -93,7 +93,6 @@ LOCAL_C_INCLUDES := \
 
 LOCAL_SHARED_LIBRARIES := \
 	libdrm \
-	libkms \
 	liblog \
 	libcutils \
 	libhardware_legacy \
