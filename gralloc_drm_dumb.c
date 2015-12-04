@@ -70,7 +70,7 @@ static struct gralloc_drm_bo_t *dumb_alloc(struct gralloc_drm_drv_t *drv,
 	int bpp;
 	int ret;
 
-	bpp = gralloc_drm_get_bpp(handle->format);
+	bpp = gralloc_drm_get_bpp(handle->format) * 8;
 	if (!bpp) {
 		ALOGE("unrecognized format 0x%x", handle->format);
 		return NULL;
