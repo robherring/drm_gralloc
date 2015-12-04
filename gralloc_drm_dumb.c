@@ -86,6 +86,9 @@ static struct gralloc_drm_bo_t *dumb_alloc(struct gralloc_drm_drv_t *drv,
 		return NULL;
 	}
 
+	if (handle->prime_fd >= 0)
+		ALOGI("prime handle set already");
+
 	memset(&arg, 0, sizeof(arg));
 
 //	pitch = ALIGN(width * bpp, 8); // 8 bytes algn ?
@@ -105,6 +108,14 @@ static struct gralloc_drm_bo_t *dumb_alloc(struct gralloc_drm_drv_t *drv,
 
 	bo->base.handle = handle;
 	bo->base.fb_handle = arg.handle;
+
+	ret = drmPrimeHandleToFD(info->fd, arg.handle, 0,
+		&handle->prime_fd);
+	ALOGI("Got fd %d for handle %d\n", handle->prime_fd, arg.handle);
+	if (ret) {
+		ALOGE("failed to get prime fd %d", ret);
+		//goto err_unref;
+	}
 
 	return &bo->base;
 
@@ -167,6 +178,9 @@ static void dumb_free(struct gralloc_drm_drv_t *drv,
 	struct dumb_bo *bo = (struct dumb_bo *) _bo;
 	struct drm_mode_destroy_dumb arg;
 	int ret;
+
+	if (_bo->handle && _bo->handle->prime_fd)
+		close(_bo->handle->prime_fd);
 
 	memset(&arg, 0, sizeof(arg));
 	arg.handle = bo->base.fb_handle;
