@@ -33,7 +33,7 @@
 #include <sys/ioctl.h>
 #include <drm.h>
 #include <xf86drm.h>
-#include <libdrm.h>
+#include <libdrm_macros.h>
 
 #include "gralloc_drm.h"
 #include "gralloc_drm_priv.h"
